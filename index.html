@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b6b53">
+  <title>CharityChain | Quyên góp minh bạch</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.5/ethers.umd.min.js"></script>
+</head>
+<body>
+  <div class="announcement"><span class="pulse"></span> MINH BẠCH TRÊN BLOCKCHAIN <span class="announcement-sep">•</span> BẢN DEMO HỌC TẬP</div>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="CharityChain trang chủ">
+      <span class="brand-mark">♡</span><span>Charity<span class="brand-light">Chain</span><small>Gieo yêu thương, lưu dấu minh bạch</small></span>
+    </a>
+    <nav><a href="#campaigns">Chiến dịch</a><a href="#how-it-works">Cách hoạt động</a><a href="#create">Tạo chiến dịch</a></nav>
+    <button class="btn btn-wallet" id="connectBtn"><span class="wallet-icon">◈</span> Kết nối ví</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> CÔNG NGHỆ VÌ CỘNG ĐỒNG</div>
+        <h1>Mỗi tấm lòng,<br>một dấu ấn <span>minh bạch.</span></h1>
+        <p>Chung tay tạo nên thay đổi tích cực. Mọi khoản đóng góp được ghi nhận trên Blockchain để cộng đồng có thể kiểm chứng.</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="#campaigns">Khám phá chiến dịch <span>↗</span></a><a class="text-link" href="#how-it-works">Tìm hiểu cách hoạt động <span>→</span></a></div>
+        <div class="trust-row"><div class="avatars"><span>♥</span><span>✦</span><span>●</span></div><div><strong>Minh bạch từ giao dịch đầu tiên</strong><small>Dữ liệu giao dịch có thể kiểm chứng công khai</small></div></div>
+      </div>
+      <div class="hero-art">
+        <div class="art-glow"></div>
+        <div class="art-card art-card-back"><span class="tiny-label">IMPACT REPORT</span><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><small>Small actions. Big impact.</small></div>
+        <div class="art-card art-card-front"><div class="heart-illustration">♡</div><div class="art-caption"><span>GỬI ĐIỀU TỐT ĐẸP</span><strong>Kindness is<br>contagious.</strong></div><div class="art-sparkle sparkle-one">✳</div><div class="art-sparkle sparkle-two">✦</div></div>
+        <div class="floating-note"><span class="check-mark">✓</span><div><strong>On-chain verified</strong><small>Giao dịch có thể kiểm tra</small></div></div>
+        <div class="floating-coin">Ξ</div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Thống kê chiến dịch">
+      <div class="stat-item"><span class="stat-icon">◎</span><div><small>Chiến dịch trên hệ thống</small><strong id="campaignCount">—</strong></div></div>
+      <div class="stat-item"><span class="stat-icon">↗</span><div><small>Tổng ETH đã quyên góp</small><strong id="totalRaised">— ETH</strong></div></div>
+      <div class="stat-item"><span class="stat-icon">◈</span><div><small>Mạng Blockchain</small><strong id="networkName">Chưa kết nối</strong></div></div>
+      <div class="stat-item stat-note"><span class="secure-icon">✓</span><div><strong>Ghi nhận minh bạch</strong><small>Kiểm chứng bằng mã giao dịch</small></div></div>
+    </section>
+
+    <section class="campaign-section section-wrap" id="campaigns">
+      <div class="section-heading"><div><div class="eyebrow">CÙNG NHAU TẠO THAY ĐỔI</div><h2>Chiến dịch cộng đồng</h2><p>Chọn một hành trình ý nghĩa và góp sức theo cách của bạn.</p></div><button class="btn btn-outline" id="refreshBtn">↻ Làm mới dữ liệu</button></div>
+      <div id="notice" class="notice" role="status">Kết nối MetaMask để tải dữ liệu từ Smart Contract. Đây là bản demo, vui lòng chỉ sử dụng mạng thử nghiệm.</div>
+      <div id="campaignGrid" class="campaign-grid"><div class="empty-state"><div class="empty-icon">♡</div><h3>Chào mừng đến CharityChain</h3><p>Kết nối ví sau khi triển khai Smart Contract để xem các chiến dịch.</p></div></div>
+    </section>
+
+    <section class="how-section" id="how-it-works">
+      <div class="section-wrap">
+        <div class="section-heading centered"><div><div class="eyebrow">ĐƠN GIẢN VÀ DỄ KIỂM CHỨNG</div><h2>Quyên góp trong 3 bước</h2><p>Công nghệ hỗ trợ niềm tin — cộng đồng cùng theo dõi từng giao dịch.</p></div></div>
+        <div class="steps">
+          <article class="step-card"><div class="step-number">01</div><div class="step-icon">◈</div><h3>Kết nối ví</h3><p>Dùng MetaMask để kết nối địa chỉ ví của bạn với ứng dụng.</p></article>
+          <article class="step-card"><div class="step-number">02</div><div class="step-icon">♡</div><h3>Chọn chiến dịch</h3><p>Nhập số ETH muốn đóng góp và xác nhận giao dịch trên ví.</p></article>
+          <article class="step-card"><div class="step-number">03</div><div class="step-icon">✓</div><h3>Kiểm chứng công khai</h3><p>Giao dịch được ghi nhận trên Blockchain và có mã giao dịch riêng.</p></article>
+        </div>
+        <div class="transparency-banner"><div class="banner-symbol">✧</div><div><strong>Minh bạch không chỉ là lời hứa.</strong><p>Blockchain giúp kiểm tra giao dịch đã ghi nhận; việc sử dụng tiền sau khi rút vẫn cần được công khai và giám sát riêng.</p></div><span class="banner-decoration">CHARITYCHAIN</span></div>
+      </div>
+    </section>
+
+    <section class="create-section section-wrap" id="create">
+      <div class="create-intro"><div class="eyebrow">LAN TỎA ĐIỀU TỐT ĐẸP</div><h2>Bắt đầu một<br><span>chiến dịch mới.</span></h2><p>Bạn có ý tưởng giúp đỡ cộng đồng? Tạo chiến dịch trên Smart Contract và chia sẻ với mọi người.</p><div class="create-tip"><span>✦</span><p><strong>Mẹo nhỏ</strong><br>Hãy mô tả rõ mục tiêu, số tiền cần huy động và thời hạn để người ủng hộ dễ theo dõi.</p></div></div>
+      <form id="createForm" class="create-form">
+        <div class="form-header"><div><h3>Tạo chiến dịch</h3><p>Thông tin sẽ được ghi lên Blockchain.</p></div><span class="form-badge">ON-CHAIN</span></div>
+        <label for="campaignTitle">Tên chiến dịch <span>*</span></label><input id="campaignTitle" maxlength="80" required placeholder="Ví dụ: Tiếp sức đến trường">
+        <label for="campaignDescription">Mô tả mục tiêu <span>*</span></label><textarea id="campaignDescription" rows="4" maxlength="500" required placeholder="Mô tả hoàn cảnh, mục tiêu và cách hỗ trợ..."></textarea>
+        <div class="form-row"><div><label for="campaignGoal">Mục tiêu (ETH) <span>*</span></label><input id="campaignGoal" type="number" min="0.001" step="0.001" required placeholder="0.5"></div><div><label for="campaignDays">Thời hạn (ngày) <span>*</span></label><input id="campaignDays" type="number" min="1" max="365" value="7" required></div></div>
+        <button class="btn btn-primary btn-full" type="submit">＋ Tạo chiến dịch trên Blockchain</button>
+        <p class="form-footnote">Ví của bạn cần có ETH thử nghiệm để trả phí gas.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer><a class="brand footer-brand" href="#"><span class="brand-mark">♡</span><span>Charity<span class="brand-light">Chain</span><small>Gieo yêu thương, lưu dấu minh bạch</small></span></a><p>Đồ án học phần Blockchain căn bản · Bản demo học tập</p><a href="#campaigns">Trở về đầu trang ↑</a></footer>
+  <div id="toast" class="toast" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
