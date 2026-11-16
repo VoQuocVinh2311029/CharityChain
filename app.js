@@ -20,10 +20,11 @@ const MONADVISION_TX_URL =
 // CHARITYCHAIN - UNG DUNG QUYEN GOP TU THIEN
 // HTML + CSS + JavaScript + Solidity + MetaMask
 // Ethers.js v6
-// ======================================================
 
+//Khai báo địa chỉ Smart Contract
 const CONTRACT_ADDRESS = "0x245b86496511F7c20c669546De83983c351B60B0";
 
+///khai báo ABI
 const ABI = [
     "function owner() view returns (address)",
     "function campaignCount() view returns (uint256)",
@@ -37,10 +38,7 @@ const ABI = [
     "event FundsWithdrawn(uint256 indexed campaignId, address indexed creator, uint256 amount)"
 ];
 
-// ======================================================
-// BIEN TOAN CUC
-// ======================================================
-
+///Khai báo biến toàn cục
 let provider = null;
 let signer = null;
 let contract = null;
@@ -48,9 +46,8 @@ let currentAccount = null;
 let toastTimer = null;
 let isConnecting = false;
 
-// ======================================================
 // CAU HINH LICH SU QUYEN GOP
-// ======================================================
+
 
 // const HISTORY_START_BLOCK = 75539915;
 // const HISTORY_CHUNK_SIZE = 10000;
@@ -68,10 +65,8 @@ const $ = (id) => document.getElementById(id);
 const grid = $("campaignGrid");
 const notice = $("notice");
 
-// ======================================================
-// KIEM TRA THU VIEN
-// ======================================================
 
+///Hàm kiểm tra ethers.js
 function checkEthers() {
     if (typeof window.ethers === "undefined") {
         console.error("Khong tim thay ethers.js.");
@@ -81,15 +76,13 @@ function checkEthers() {
     return true;
 }
 
-// ======================================================
-// CAC HAM TIEN ICH
-// ======================================================
 
+///Hàm rút gọn địa chỉ ví
 function shortAddress(address) {
     if (!address) return "Chưa kết nối";
     return address.slice(0, 6) + "..." + address.slice(-4);
 }
-
+///Hàm định dạng tiền
 function formatEth(wei, decimals = 4) {
     if (wei === undefined || wei === null) return "0 MON";
 
@@ -98,7 +91,7 @@ function formatEth(wei, decimals = 4) {
             maximumFractionDigits: decimals
         }) + " MON";
 }
-
+///Hàm chuyển đổi các ký tự đặc biệt
 function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"']/g, function (ch) {
         const entities = {
@@ -111,7 +104,7 @@ function escapeHtml(value) {
         return entities[ch];
     });
 }
-
+///Hàm hiển thị thông báo ngắn trên website
 function showToast(message, type = "success") {
     const toast = $("toast");
 
@@ -133,7 +126,7 @@ function showToast(message, type = "success") {
         toast.className = "toast";
     }, 5000);
 }
-
+///Hàm hiển thị hoặc ẩn một thông báo trên giao diện website
 function setNotice(message, show = true) {
     const noticeElement = $("notice");
 
@@ -145,7 +138,7 @@ function setNotice(message, show = true) {
     noticeElement.textContent = message;
     noticeElement.classList.toggle("show", show);
 }
-
+///Hàm quản lý trạng thái bận của nút bấm trên website
 function setBusy(button, busy, text = "Đang xử lý...") {
     if (!button) return;
 
@@ -164,7 +157,8 @@ function setBusy(button, busy, text = "Đang xử lý...") {
         }
     }
 }
-
+///Hàm chuyển đổi các thông báo lỗi kỹ thuật từ JavaScript,
+//MetaMask hoặc Smart Contract thành những câu thông báo tiếng Việt dễ hiểu cho người dùng website CharityChain.
 function friendlyError(error) {
     const message = String(
         error?.shortMessage ||
@@ -235,10 +229,7 @@ function friendlyError(error) {
         : message;
 }
 
-// ======================================================
-// CAP NHAT GIAO DIEN VI
-// ======================================================
-
+///Hàm cập nhật thông tin ví MetaMask và mạng Blockchain trên giao diện website CharityChain.
 function updateWalletUI(address, networkName) {
     const connectBtn = $("connectBtn");
 
@@ -257,10 +248,8 @@ function updateWalletUI(address, networkName) {
     }
 }
 
-// ======================================================
-// KHOI TAO CONTRACT
-// ======================================================
 
+///Hàm khởi tạo Smart Contract
 function isContractAddressConfigured() {
     return (
         typeof CONTRACT_ADDRESS === "string" &&
@@ -268,7 +257,7 @@ function isContractAddressConfigured() {
         window.ethers.isAddress(CONTRACT_ADDRESS)
     );
 }
-
+///Hàm khởi tạo kết nối giữa website CharityChain và Smart Contract
 function initializeContract() {
     if (!signer) {
         contract = null;
@@ -295,10 +284,7 @@ function initializeContract() {
     return true;
 }
 
-// ======================================================
-// KET NOI METAMASK
-// ======================================================
-
+///Hàm kết nối MetaMask
 async function connectWallet() {
     if (isConnecting) return;
     if (!checkEthers()) return;
@@ -374,11 +360,8 @@ async function connectWallet() {
     }
 }
 
-// ======================================================
-// TAI DANH SACH CHIEN DICH
-// ======================================================
 
-
+///Hàm tải chiến dịch
 async function loadCampaigns() {
     if (!checkEthers()) return;
 
@@ -554,10 +537,8 @@ async function loadCampaigns() {
 }
 
 
-// ======================================================
-// HIEN THI MOT CHIEN DICH
-// ======================================================
 
+///Hàm hiển thị chiến dịch
 function renderCampaign(c) {
     const reached = c.totalRaised >= c.goal;
 
@@ -685,10 +666,8 @@ function renderCampaign(c) {
     `;
 }
 
-// ======================================================
-// GAN SU KIEN QUYEN GOP VA RUT TIEN
-// ======================================================
 
+///gắn sự kiện cho hai loại nút trên website CharityChain: nút quyên góp (Donate) và nút rút tiền (Withdraw).
 function bindCampaignButtons() {
     document.querySelectorAll(".donate-btn").forEach(function (button) {
         button.addEventListener("click", async function () {
@@ -790,10 +769,8 @@ function bindCampaignButtons() {
     });
 }
 
-// ======================================================
-// LICH SU QUYEN GOP - DOC SU KIEN TU BLOCKCHAIN
-// ======================================================
 
+///Hàm tạo khu vực hiển thị lịch sử quyên góp trên website CharityChain
 function ensureDonationHistorySection() {
     if ($("donationHistorySection")) return;
 
@@ -1053,10 +1030,8 @@ function ensureDonationHistorySection() {
     }
 }
 
-// ======================================================
-// CAP NHAT THONG BAO LICH SU
-// ======================================================
 
+///3 hàm nhỏ hỗ trợ chức năng lịch sử quyên góp của CharityChain.
 function setHistoryMessage(message, isError = false) {
     const summary = $("historySummary");
     if (!summary) return;
@@ -1075,13 +1050,8 @@ function getHistoryDonorFilter() {
     return ($("historyDonorFilter")?.value || "").trim().toLowerCase();
 }
 
-// ======================================================
-// TRUY VAN SU KIEN DONATIONRECEIVED
-// ======================================================
 
-// RPC co the gioi han so block moi lan truy van.
-// Neu gap loi, tu dong chia nho khoang block.
-
+///Hàm đọc các sự kiện quyên góp từ Blockchain Monad Testnet trong một khoảng Block nhất định.
 async function getDonationLogsInRange(
     fromBlock,
     toBlock,
@@ -1128,10 +1098,7 @@ async function getDonationLogsInRange(
 }
 
 
-// ======================================================
-// LAY THOI GIAN BLOCK
-// ======================================================
-
+///Hàm lấy thời gian của một Block trên Blockchain Monad Testnet
 async function getDonationBlockTime(blockNumber) {
     const key = Number(blockNumber);
 
@@ -1148,10 +1115,8 @@ async function getDonationBlockTime(blockNumber) {
     return promise;
 }
 
-// ======================================================
-// LAY TEN CHIEN DICH
-// ======================================================
 
+///Hàm lấy tên chiến dịch quyên góp từ Smart Contract trên Monad Testnet
 async function getDonationCampaignTitle(campaignId) {
     const key = String(campaignId);
 
@@ -1172,10 +1137,8 @@ async function getDonationCampaignTitle(campaignId) {
     return promise;
 }
 
-// ======================================================
-// LOC LICH SU QUYEN GOP
-// ======================================================
 
+///Hàm lọc danh sách lịch sử quyên góp theo chiến dịch và địa chỉ ví người quyên góp.
 function filteredDonationHistory() {
     const selectedCampaign = getHistoryCampaignFilter();
     const donorSearch = getHistoryDonorFilter();
@@ -1193,10 +1156,7 @@ function filteredDonationHistory() {
     });
 }
 
-// ======================================================
-// HIEN THI LICH SU QUYEN GOP
-// ======================================================
-
+///Hàm hiển thị danh sách các giao dịch quyên góp lên bảng HTML
 async function renderDonationHistory() {
     const body = $("donationHistoryBody");
     const countLabel = $("historyCountLabel");
@@ -1315,14 +1275,7 @@ async function renderDonationHistory() {
     }
 }
 
-// ======================================================
-// TAI LICH SU QUYEN GOP TU MONAD TESTNET
-// ======================================================
 
-
-// ==========================================
-// BO NHO DEM LICH SU QUYEN GOP CHARITYCHAIN
-// ==========================================
 
 // Tao khoa rieng theo dia chi Smart Contract
 function getDonationHistoryCacheKey() {
